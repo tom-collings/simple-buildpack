@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+cat "something from the simple buildpack" > $BUILD_DIR/myfile.txt
+
+exit 0
