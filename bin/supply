@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+cat "something from the simple buildpack supply script" > $BUILD_DIR/mysupplyfile.txt
+
+exit 0

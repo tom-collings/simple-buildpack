@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-BUILD_DIR=$1
-CACHE_DIR=$2
-
-cat "something from the simple buildpack compile script" > $BUILD_DIR/mycompilefile.txt
-
-exit 0
