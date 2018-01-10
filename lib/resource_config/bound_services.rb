@@ -84,7 +84,7 @@ module ResourceConfig
       end
 
       def resources_xml
-          @app_dir+ 'WEB-INF/resourcesXYZ.xml'
+          @app_dir+ 'WEB-INF/resources.xml'
       end
 
       def read_xml(file)
