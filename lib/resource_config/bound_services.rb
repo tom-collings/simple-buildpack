@@ -65,7 +65,7 @@ module ResourceConfig
 
         yield
 
-        puts "(#{(Time.now - start_time).duration})".green.italic
+        puts "(#{(Time.now - start_time)})".green.italic
       end
 
       def formatter
