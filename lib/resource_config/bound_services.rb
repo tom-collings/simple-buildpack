@@ -1,5 +1,6 @@
 require 'util/services'
 require 'json'
+require 'pathname'
 
 module ResourceConfig
 
