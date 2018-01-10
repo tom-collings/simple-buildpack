@@ -5,53 +5,57 @@ module ResourceConfig
 
   class BoundService
 
-    attr_reader :environment
-    attr_reader :services
+    class << self
 
-    def initialize(app_dir)
-      @app_dir = Pathname.new(File.expand_path(app_dir))
-      @environment = ENV.to_hash
-      @services    = Services.new(parse(@environment.delete('VCAP_SERVICES')))
-    end
+      attr_reader :environment
+      attr_reader :services
 
-    def with_buildpack(app_dir)
-      initialize(app_dir)
-      supply
-    end
+      def initialize(app_dir)
+        @app_dir = Pathname.new(File.expand_path(app_dir))
+        @environment = ENV.to_hash
+        @services    = Services.new(parse(@environment.delete('VCAP_SERVICES')))
+      end
 
-    def supply
-      mutate_resources_xml
-    end
+      def with_buildpack(app_dir)
+        initialize(app_dir)
+        supply
+      end
 
-    def mutate_resources_xml
-        with_timing 'Modifying /WEB-INF/resources.xml for Resource Configuration' do
-          document = read_xml resources_xml
+      def supply
+        mutate_resources_xml
+      end
 
-          resources  = REXML::XPath.match(document, '/resources').first
-          resources  = document.add_element 'resources' if resources.nil?
+      def mutate_resources_xml
+          with_timing 'Modifying /WEB-INF/resources.xml for Resource Configuration' do
+            document = read_xml resources_xml
 
-          write_xml resources_xml, document
+            resources  = REXML::XPath.match(document, '/resources').first
+            resources  = document.add_element 'resources' if resources.nil?
 
+            write_xml resources_xml, document
+
+          end
+        end
+
+      def parse(input)
+          input ? JSON.parse(input) : {}
+      end
+
+      def resources_xml
+          @app_dir+ 'WEB-INF/resourcesXYZ.xml'
+      end
+
+      def read_xml(file)
+        File.open(file, 'a+') { |f| REXML::Document.new f }
+      end
+
+      def write_xml(file, document)
+        file.open('w') do |f|
+          formatter.write document, f
+          f << "\n"
         end
       end
 
-    def parse(input)
-        input ? JSON.parse(input) : {}
-    end
-
-    def resources_xml
-        @app_dir+ 'WEB-INF/resourcesXYZ.xml'
-    end
-
-    def read_xml(file)
-      File.open(file, 'a+') { |f| REXML::Document.new f }
-    end
-
-    def write_xml(file, document)
-      file.open('w') do |f|
-        formatter.write document, f
-        f << "\n"
-      end
     end
 
   end
