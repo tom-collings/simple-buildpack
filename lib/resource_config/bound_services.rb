@@ -27,7 +27,8 @@ module ResourceConfig
       end
 
       def mutate_resources_xml
-          with_timing 'Modifying /WEB-INF/resources.xml for Resource Configuration' do
+          #with_timing 'Modifying /WEB-INF/resources.xml for Resource Configuration' do
+          do
             document = read_xml resources_xml
 
             resources  = REXML::XPath.match(document, '/resources').first
