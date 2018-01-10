@@ -70,7 +70,7 @@ module ResourceConfig
 
           credsHash.each do |key, value|
 
-            resource.add_text REXML::Text.new(key + " " + value + "\n")
+            resource.add_text REXML::Text.new(key + " = " + value + "\n")
 
           end
 
