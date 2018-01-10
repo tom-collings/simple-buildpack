@@ -50,11 +50,16 @@ module ResourceConfig
         end
 
         def add_resource(service, resources)
-          resources.add_element 'Resource',
-                                'id' => "jdbc/#{service['name']}",
-                                'type' => 'DataSource',
-                                'properties-provider' =>
-                                'org.cloudfoundry.reconfiguration.tomee.DelegatingPropertiesProvider'
+          #resources.add_element 'Resource',
+          #                      'id' => "jdbc/#{service['name']}",
+          #                      'type' => 'DataSource',
+          #                      'properties-provider' =>
+          #                      'org.cloudfoundry.reconfiguration.tomee.DelegatingPropertiesProvider'
+
+          credsHash = Hash[service['credentials'].map {|key, value|, [key, value]} ]
+          
+          resources.add_element 'Resource', credsHash
+
         end
 
 
