@@ -27,8 +27,7 @@ module ResourceConfig
       end
 
       def mutate_resources_xml
-          #with_timing 'Modifying /WEB-INF/resources.xml for Resource Configuration' do
-          do
+          with_timing 'Modifying /WEB-INF/resources.xml for Resource Configuration' do
             document = read_xml resources_xml
 
             resources  = REXML::XPath.match(document, '/resources').first
@@ -56,6 +55,15 @@ module ResourceConfig
           formatter.write document, f
           f << "\n"
         end
+      end
+
+      def with_timing(caption)
+        start_time = Time.now
+        print "       #{caption} "
+
+        yield
+
+        puts "(#{(Time.now - start_time).duration})".green.italic
       end
 
     end
