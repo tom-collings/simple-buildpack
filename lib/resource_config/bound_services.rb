@@ -107,8 +107,9 @@ module ResourceConfig
       end
 
       def formatter
-        formatter         = REXML::Formatters::Pretty.new(4)
-        formatter.compact = true
+        #formatter         = REXML::Formatters::Pretty.new(4)
+        formatter         = REXML::Formatters::Default.new
+        #formatter.compact = true
         formatter
       end
 
