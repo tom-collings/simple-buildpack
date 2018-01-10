@@ -1,6 +1,7 @@
 require 'util/services'
 require 'rexml/document'
 require 'rexml/formatters/pretty'
+require 'rexml/formatters/transitive'
 require 'json'
 require 'pathname'
 
@@ -108,7 +109,7 @@ module ResourceConfig
 
       def formatter
         #formatter         = REXML::Formatters::Pretty.new(4)
-        formatter         = REXML::Formatters::Transitive.new
+        formatter         = REXML::Formatters::Transitive.new(4)
         #formatter.compact = true
         formatter
       end
