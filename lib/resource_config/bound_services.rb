@@ -44,7 +44,7 @@ module ResourceConfig
 
         def services_as_resources(resources)
           @services.each do |service|
-            #next unless service['tags'].include? 'relational'
+            next unless service['includeInResources'].include? 'true'
             add_resource service, resources
           end
         end
