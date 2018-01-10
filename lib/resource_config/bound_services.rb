@@ -44,7 +44,7 @@ module ResourceConfig
 
         def services_as_resources(resources)
           @services.each do |service|
-            next unless (!service['includeInResources'].nil) && (service['includeInResources'].include? 'true')
+            next unless (service['credentials'].include? 'includeInResources') && (service['credentials']['includeInResources'] == 'true')
             add_resource service, resources
           end
         end
