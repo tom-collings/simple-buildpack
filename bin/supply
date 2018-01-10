@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ruby
 
-BUILD_DIR=$1
-CACHE_DIR=$2
+require 'resource_config/bound_services'
 
-echo "something from the simple buildpack supply script" > $BUILD_DIR/mysupplyfile.txt
+appDir=ARGV[0]
+
+ResourceConfig:BoundService.with_buildpack(appDir)
 
 exit 0
