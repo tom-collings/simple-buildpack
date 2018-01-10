@@ -8,6 +8,6 @@ require 'resource_config/bound_services'
 
 appDir=ARGV[0]
 
-ResourceConfig:BoundService.with_buildpack(appDir)
+ResourceConfig::BoundService.with_buildpack(appDir)
 
 exit 0
