@@ -57,7 +57,7 @@ module ResourceConfig
           #                      'org.cloudfoundry.reconfiguration.tomee.DelegatingPropertiesProvider'
 
           credsHash = Hash[service['credentials'].map {|key, value| [key, value]} ]
-          credsHash.remove!('includeInResources')
+          credsHash = credsHash.select{|x| x != 'includeInResources'}
 
           resources.add_element 'Resource', credsHash
 
