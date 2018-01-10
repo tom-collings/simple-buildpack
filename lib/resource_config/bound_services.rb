@@ -29,7 +29,7 @@ module ResourceConfig
       end
 
       def mutate_resources_xml
-          with_timing 'Modifying /WEB-INF/resourcesXYZ.xml for Resource Configuration' do
+          with_timing 'Modifying /WEB-INF/resources.xml for Resource Configuration' do
             document = read_xml resources_xml
 
             resources  = REXML::XPath.match(document, '/resources').first
@@ -83,7 +83,7 @@ module ResourceConfig
       end
 
       def resources_xml
-          @app_dir+ 'WEB-INF/resourcesXYZ.xml'
+          @app_dir+ 'WEB-INF/resources.xml'
       end
 
       def read_xml(file)
