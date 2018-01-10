@@ -29,16 +29,35 @@ module ResourceConfig
       end
 
       def mutate_resources_xml
-          with_timing 'Modifying /WEB-INF/resources.xml for Resource Configuration' do
+          with_timing 'Modifying /WEB-INF/resourcesXYZ.xml for Resource Configuration' do
             document = read_xml resources_xml
 
             resources  = REXML::XPath.match(document, '/resources').first
             resources  = document.add_element 'resources' if resources.nil?
 
+            services_as_resources resources
+
             write_xml resources_xml, document
 
           end
         end
+
+        def services_as_resources(resources)
+          @services.each do |service|
+            #next unless service['tags'].include? 'relational'
+            add_relational_resource service, resources
+          end
+        end
+
+        def add_resource(service, resources)
+          resources.add_element 'Resource',
+                                'id' => "jdbc/#{service['name']}",
+                                'type' => 'DataSource',
+                                'properties-provider' =>
+                                'org.cloudfoundry.reconfiguration.tomee.DelegatingPropertiesProvider'
+        end
+
+
 
       def parse(input)
           input ? JSON.parse(input) : {}
