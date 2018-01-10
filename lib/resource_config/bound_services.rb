@@ -14,7 +14,7 @@ module ResourceConfig
       def initialize(app_dir)
         @app_dir = Pathname.new(File.expand_path(app_dir))
         @environment = ENV.to_hash
-        @services    = Services.new(parse(@environment.delete('VCAP_SERVICES')))
+        @services    = Util::Services.new(parse(@environment.delete('VCAP_SERVICES')))
       end
 
       def with_buildpack(app_dir)
