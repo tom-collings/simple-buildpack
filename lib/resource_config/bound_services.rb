@@ -68,6 +68,12 @@ module ResourceConfig
         puts "(#{(Time.now - start_time).duration})".green.italic
       end
 
+      def formatter
+        formatter         = REXML::Formatters::Pretty.new(4)
+        formatter.compact = true
+        formatter
+      end
+
     end
 
   end
