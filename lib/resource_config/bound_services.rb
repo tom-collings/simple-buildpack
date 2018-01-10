@@ -1,4 +1,6 @@
 require 'util/services'
+require 'rexml/document'
+require 'rexml/formatters/pretty'
 require 'json'
 require 'pathname'
 
