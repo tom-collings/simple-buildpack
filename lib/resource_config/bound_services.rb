@@ -61,9 +61,18 @@ module ResourceConfig
 
           #resources.add_element 'Resource', credsHash
 
-          resources.add_element 'Resource',
+          resource = resources.add_element 'Resource',
                                 'id' => "#{service['credentials']['id']}",
                                 'type' => "#{service['credentials']['type']}"
+
+          credsHash = Hash[service['credentials'].map {|key, value| [key, value]} ]
+          credsHash = credsHash.select{|x| ((x != 'includeInResources') && (x != 'id') && (x != 'type'))}
+
+          credsHash.each do |key, value|
+
+            resource.add_text (key + " " + value + "\r\n")
+
+          end
 
         end
 
