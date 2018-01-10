@@ -56,10 +56,14 @@ module ResourceConfig
           #                      'properties-provider' =>
           #                      'org.cloudfoundry.reconfiguration.tomee.DelegatingPropertiesProvider'
 
-          credsHash = Hash[service['credentials'].map {|key, value| [key, value]} ]
-          credsHash = credsHash.select{|x| x != 'includeInResources'}
+          #credsHash = Hash[service['credentials'].map {|key, value| [key, value]} ]
+          #credsHash = credsHash.select{|x| x != 'includeInResources'}
 
-          resources.add_element 'Resource', credsHash
+          #resources.add_element 'Resource', credsHash
+
+          resources.add_element 'Resource',
+                                'id' => "#{service['credentials']['id']}",
+                                'type' => "#{service['credentials']['type']}"
 
         end
 
