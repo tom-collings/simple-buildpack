@@ -60,16 +60,24 @@ module ResourceConfig
           #credsHash = Hash[service['credentials'].map {|key, value| [key, value]} ]
           #credsHash = credsHash.select{|x| x != 'includeInResources'}
 
-          #resources.add_element 'Resource', credsHash
-
-          resource = resources.add_element 'Resource',
-                                'id' => "#{service['credentials']['id']}",
-                                'class-name' => "#{service['credentials']['class-name']}"
+          attributeArray = ['id', 'type', 'class-name', 'provider', 'factory-name', 'properties-provider', 'classpath', 'aliases', 'post-construct', 'pre-destroy', 'Lazy']
 
           credsHash = Hash[service['credentials'].map {|key, value| [key, value]} ]
-          credsHash = credsHash.select{|x| ((x != 'includeInResources') && (x != 'id') && (x != 'class-name') )}
 
-          credsHash.each do |key, value|
+          credsAsAttributes = credsHash.select{|x| attributeArray.include? x}
+          credsAsProperties = credsHash.select{|x| !attributeArray.include? x}
+          credsAsProperties = credsAsProperties.select{|x| (x != 'includeInResources')  }
+
+          resources.add_element 'Resource', credsAsAttributes
+
+          #resource = resources.add_element 'Resource',
+          #                      'id' => "#{service['credentials']['id']}",
+          #                      'class-name' => "#{service['credentials']['class-name']}"
+
+
+
+
+          credsAsProperties.each do |key, value|
 
             resource.add_text REXML::Text.new((key + " = " + value + "\n"), true)
 
