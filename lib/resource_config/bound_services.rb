@@ -33,6 +33,13 @@ module ResourceConfig
 
       def mutate_resources_xml
           with_timing 'Modifying /WEB-INF/resources.xml for Resource Configuration' do
+
+            web_inf = File.join(@app_dir, '/WEB-INF')
+            if !Dir.exist?(web_inf) do
+                Dir.mkdir(web_inf)
+              end
+            end
+
             document = read_xml resources_xml
 
             resources  = REXML::XPath.match(document, '/resources').first
