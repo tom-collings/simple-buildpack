@@ -53,31 +53,20 @@ module ResourceConfig
         end
 
         def add_resource(service, resources)
-          #resources.add_element 'Resource',
-          #                      'id' => "jdbc/#{service['name']}",
-          #                      'type' => 'DataSource',
-          #                      'properties-provider' =>
-          #                      'org.cloudfoundry.reconfiguration.tomee.DelegatingPropertiesProvider'
-
-          #credsHash = Hash[service['credentials'].map {|key, value| [key, value]} ]
-          #credsHash = credsHash.select{|x| x != 'includeInResources'}
 
           attributeArray = ['id', 'type', 'class-name', 'provider', 'factory-name', 'properties-provider', 'classpath', 'aliases', 'post-construct', 'pre-destroy', 'Lazy']
 
           credsHash = Hash[service['credentials'].map {|key, value| [key, value]} ]
 
+          # split the hash into two pieces:  one where they should be included as attributes
+          # and one where they should be included as properties
           credsAsAttributes = credsHash.select{|x| attributeArray.include? x}
           credsAsProperties = credsHash.select{|x| !attributeArray.include? x}
+
+          # remove the flag param as a property
           credsAsProperties = credsAsProperties.select{|x| (x != CRED_PARAM_FLAG)  }
 
           resource = resources.add_element 'Resource', credsAsAttributes
-
-          #resource = resources.add_element 'Resource',
-          #                      'id' => "#{service['credentials']['id']}",
-          #                      'class-name' => "#{service['credentials']['class-name']}"
-
-
-
 
           credsAsProperties.each do |key, value|
 
@@ -118,9 +107,7 @@ module ResourceConfig
       end
 
       def formatter
-        #formatter         = REXML::Formatters::Pretty.new(4)
         formatter         = REXML::Formatters::Transitive.new(4)
-        #formatter.compact = true
         formatter
       end
 
