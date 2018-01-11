@@ -68,7 +68,7 @@ module ResourceConfig
           credsAsProperties = credsHash.select{|x| !attributeArray.include? x}
           credsAsProperties = credsAsProperties.select{|x| (x != 'includeInResources')  }
 
-          resources.add_element 'Resource', credsAsAttributes
+          resource = resources.add_element 'Resource', credsAsAttributes
 
           #resource = resources.add_element 'Resource',
           #                      'id' => "#{service['credentials']['id']}",
