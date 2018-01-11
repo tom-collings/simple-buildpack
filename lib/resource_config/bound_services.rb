@@ -14,6 +14,8 @@ module ResourceConfig
       attr_reader :environment
       attr_reader :services
 
+      CRED_PARAM_FLAG = 'includeInResources'
+
       def initialize(app_dir)
         @app_dir = Pathname.new(File.expand_path(app_dir))
         @environment = ENV.to_hash
@@ -45,7 +47,7 @@ module ResourceConfig
 
         def services_as_resources(resources)
           @services.each do |service|
-            next unless (service['credentials'].include? 'includeInResources') && (service['credentials']['includeInResources'] == 'true')
+            next unless (service['credentials'].include? CRED_PARAM_FLAG) && (service['credentials'][CRED_PARAM_FLAG] == 'true')
             add_resource service, resources
           end
         end
@@ -66,7 +68,7 @@ module ResourceConfig
 
           credsAsAttributes = credsHash.select{|x| attributeArray.include? x}
           credsAsProperties = credsHash.select{|x| !attributeArray.include? x}
-          credsAsProperties = credsAsProperties.select{|x| (x != 'includeInResources')  }
+          credsAsProperties = credsAsProperties.select{|x| (x != CRED_PARAM_FLAG)  }
 
           resource = resources.add_element 'Resource', credsAsAttributes
 
