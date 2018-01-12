@@ -43,4 +43,4 @@ you will get the following resources.xml:
 </resources>
 ```
 
-This is intended to be used with the multi-buildpack and have the tomee-buildpack run at some point after it in the threads of buildpacks.  
+This is intended to be used with the multi-buildpack and have the tomee-buildpack run at some point after it in the chain of buildpacks.  
