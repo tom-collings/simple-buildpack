@@ -44,3 +44,5 @@ you will get the following resources.xml:
 ```
 
 This is intended to be used with the multi-buildpack and have the tomee-buildpack run at some point after it in the chain of buildpacks.  
+
+See https://github.com/tom-collings/java-test-applications/tree/master/ejb-application for an example application.
